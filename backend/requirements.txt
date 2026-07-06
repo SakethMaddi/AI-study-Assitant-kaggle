@@ -1,0 +1,9 @@
+google-adk>=2.3.0
+fastapi
+uvicorn
+python-multipart
+pydantic
+pdfplumber
+mcp
+duckduckgo-search
+python-dotenv

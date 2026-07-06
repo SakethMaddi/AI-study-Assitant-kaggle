@@ -1,0 +1,65 @@
+Title Slide
+Good [morning/afternoon], everyone.
+I'm Nallagopu Vamsi Kishore, and today I'll be presenting on 'Implementing Fault-Tolerant Services
+Using the State Machine Approach' as part of the CSE 6600 Operating Systems Concepts & Theory
+course.
+Quick Look
+Let's begin with a quick overview.
+This model ensures fault-tolerant services using replicated deterministic state machines.
+Every replica processes the same request in the same order using logical clocks and agreement
+protocols.
+Why is this important? It ensures system reliability even in the presence of failures.
+The steps involved are:
+Request -> Agreement -> Ordering -> Stability Check -> Execution -> Output.
+Technologies used include Lamport clocks, Byzantine Agreement, and ABCAST.
+Introduction & Motivation
+In distributed systems, failures in hardware, software, or the network are common.
+Fault tolerance ensures the system continues operating correctly despite these failures.
+The state machine approach is a widely adopted method for this, especially in systems like
+databases, OS components, cloud infrastructure, and avionics.
+Core Idea State Machine Replication
+The main idea is to treat a service as a deterministic state machine.
+All replicas start in the same state and process identical inputs to produce identical outputs.
+This guarantees consistency across distributed systems.
+Fault Models & Minimum Replication
+There are two main fault models:
+1. Fail-Stop - detects crashes; requires t + 1 replicas.
+2. Byzantine faults - arbitrary behavior; needs 2t + 1 replicas.
+To tolerate up to 't' faulty replicas, you need more than 2t correct ones, like 3 replicas for 1
+Byzantine failure.
+Agreement & Ordering Techniques
+To ensure correctness:
+- Agreement ensures all correct replicas receive the same requests.
+- Ordering ensures they process them in the same order.
+Lamport Logical Clocks are used:
+- On send or internal event: T := T + 1
+- On receive: T := max(T, T_msg) + 1
+Each request gets a unique UID: (T, Process_ID).
+Stability checks ensure requests are only processed when the system is synchronized.
+Technologies Used for Coordination
+We use:
+- Lamport Clocks for logical time.
+- ABCAST from the ISIS toolkit for replica-generated IDs.
+- Stability Tests to delay request execution until previous ones are confirmed.
+- Byzantine Agreement Protocols like Dolev-Strong and PBFT for malicious fault handling.
+Reconfiguration & Fault Recovery
+When new replicas join, they must synchronize state before participating.
+This involves receiving pending requests and doing stability checks.
+It helps maintain system availability and long-term fault tolerance.
+Advantages & Disadvantages
+Some key advantages:
+- High reliability and consistency
+- Handles both fail-stop and Byzantine faults
+- Modular and scalable for OS and services
+However, disadvantages include:
+- High message complexity
+- Requires time synchronization
+- Overhead due to stability checks and agreement protocols.
+Relevance & Conclusion
+This approach is used in real-world systems like Paxos, Raft, and distributed file systems.
+It provides a robust, crash-safe, and secure execution environment.
+In conclusion, the State Machine Replication model is a powerful method for achieving fault
+tolerance in OS-level components through Agreement, Ordering, and Stability.
+Thank You
+Thank you for your attention.
+I'm open to any questions you might have.
